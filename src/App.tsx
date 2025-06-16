@@ -10,11 +10,12 @@ import { UserTableData, CourseTableData, Column } from "./types";
 function App() {
   const [userTableData, setUserTableData] = useState<UserTableData[]>([]);
   const [courseTableData, setCourseTableData] = useState<CourseTableData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 데이터 fetching Promise.all을 곁들인 비동기 처리..
   // useEffect(() => {
   //   const fetchData = async () => {
+  //     setIsLoading(true);
   //     try {
   //       const [response1, response2] = await Promise.all([fetch('/data/tableData1.json'), fetch('/data/tableData2.json')]);
   //       if (!response1.ok || !response2.ok) {
@@ -36,6 +37,7 @@ function App() {
 
   // 정적으로 import 해서 데이터 가져오기
   useEffect(() => {
+    setIsLoading(true);
     setUserTableData(tableData_1);
     setCourseTableData(tableData_2);
     setIsLoading(false);

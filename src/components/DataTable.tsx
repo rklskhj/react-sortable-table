@@ -4,7 +4,13 @@ import { DataTableProps, SortConfig } from "../types";
 
 export default function DataTable<
   T extends Record<string, unknown> & { id: string | number }
->({ data, columns, title, disabledColumns = [] }: DataTableProps<T>) {
+>({
+  data,
+  columns,
+  title,
+  disabledColumns = [],
+  isLoading,
+}: DataTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
     direction: null,
@@ -103,6 +109,10 @@ export default function DataTable<
   const displayValue = (val: unknown): string => {
     return val === null ? "——" : String(val);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="table-container">
