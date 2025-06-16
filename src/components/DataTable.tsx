@@ -84,27 +84,22 @@ export default function DataTable<
     return sortData(filteredData, sortConfig);
   }, [filteredData, sortConfig, sortData]);
 
-  const handleSort = useCallback(
-    (columnKey: string) => {
-      if (disabledColumns.includes(columnKey)) return;
-
-      setSortConfig((prev) => {
-        let direction: "asc" | "desc" | null = "asc";
-        if (prev.key === columnKey) {
-          if (prev.direction === "asc") {
-            direction = "desc";
-          } else if (prev.direction === "desc") {
-            direction = null;
-          }
+  const handleSort = (columnKey: string) => {
+    setSortConfig((prev) => {
+      let direction: "asc" | "desc" | null = "asc";
+      if (prev.key === columnKey) {
+        if (prev.direction === "asc") {
+          direction = "desc";
+        } else if (prev.direction === "desc") {
+          direction = null;
         }
-        return {
-          key: direction ? columnKey : null,
-          direction: direction,
-        };
-      });
-    },
-    [disabledColumns]
-  );
+      }
+      return {
+        key: direction ? columnKey : null,
+        direction: direction,
+      };
+    });
+  };
 
   const displayValue = (val: unknown): string => {
     return val === null ? "——" : String(val);
@@ -139,7 +134,11 @@ export default function DataTable<
                       ? "disabled"
                       : "sortable"
                   }`}
-                  onClick={() => handleSort(column.key)}
+                  onClick={
+                    disabledColumns.includes(column.key)
+                      ? undefined
+                      : () => handleSort(column.key)
+                  }
                 >
                   <div className="header-content">
                     <span className="header-text">{column.label}</span>
