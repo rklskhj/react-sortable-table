@@ -8,8 +8,8 @@ import React, { useState, useEffect } from "react";
 import { UserTableData, CourseTableData, Column } from "./types";
 
 function App() {
-  const [tableData1, setTableData1] = useState<UserTableData[]>([]);
-  const [tableData2, setTableData2] = useState<CourseTableData[]>([]);
+  const [userTableData, setUserTableData] = useState<UserTableData[]>([]);
+  const [courseTableData, setCourseTableData] = useState<CourseTableData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // 데이터 fetching Promise.all을 곁들인 비동기 처리..
@@ -22,7 +22,7 @@ function App() {
   //       }
   //       const data1 = await response1.json();
   //       const data2 = await response2.json();
-  //       setTableData1(data1);
+  //       setuserTableData(data1);
   //       setTableData2(data2);
   //     } catch (error) {
   //       console.error('Error fetching table data:', error);
@@ -36,8 +36,8 @@ function App() {
 
   // 정적으로 import 해서 데이터 가져오기
   useEffect(() => {
-    setTableData1(tableData_1);
-    setTableData2(tableData_2);
+    setUserTableData(tableData_1);
+    setCourseTableData(tableData_2);
     setIsLoading(false);
   }, []);
 
@@ -89,14 +89,14 @@ function App() {
       <div className="container">
         <DataTable<UserTableData>
           columns={table1Columns}
-          data={tableData1}
+          data={userTableData}
           title="Developers currently enrolled in this course. The table below is ordered (descending) by the Gender column."
           disabledColumns={["email"]}
           isLoading={isLoading}
         />
         <DataTable<CourseTableData>
           columns={table2Columns}
-          data={tableData2}
+          data={courseTableData}
           title="List of developers with an affordable course (has no default sorting)."
           isLoading={isLoading}
           disabledColumns={[]}
